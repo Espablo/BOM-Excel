@@ -1,4 +1,4 @@
-# CSV-BOM
+# BOM->Excel
 Creates a bill of material and cut lists from the browser components tree in Autodesk Fusion360.
 
 ## General Usage Instructions
@@ -7,16 +7,13 @@ There is also an option to generate cut lists for woodworking projects. They can
 
 ### Supportet options
 
-![](resources/CSV-BOM/store_screen.png)
+![](resources/BOM-Excel/store_screen.png)
 
 * **Selected only**
 > Means that only selected components will be exported to CSV.
 
 * **Include dimension**
 > Exports the accumulated bounding box dimension of all solid bodies on first level whithin a component.
-
-* **Separate dimensions**
-> Places the dimension values in separate CVS output columns.
 
 * **Sort Dimensions**
 > If you are cutting your parts out of any kind of panelized material (i.e. plywood), you want the height of the part usually be the thickness of your material. 
@@ -56,18 +53,6 @@ The smallest value becomes the height (thickness), the next larger the width and
 * **Include material**
 > Includes the material names as an comma seperated list for all bodies at first level whithin a component.
 
-### Cut List
-
-* **Generate Cut List**
-> Generates a file that can be used in the [cut list optimization software by Gary Darby](http://www.delphiforfun.org/Programs/CutList.htm). 
-This is especially helpful in woodworking projects and allows to optimize panel use.
-The file is saved under the same name as the BOM but with a "_cutList.txt" ending.
-
-> ![Example Cut List/Panel Optimization](resources/CSV-BOM/cutlist.png)  
-> Example Cut List/Panel Optimization
-	
-> Note: If the cut list software is not able to read your dimensions properly, try changing the option "Use comma delimiter" in CSV-BOM (see below).
-
 ### Misc
 
 * **Include description**
@@ -93,20 +78,20 @@ The file is saved under the same name as the BOM but with a "_cutList.txt" endin
 
 	![Toolbar top right](resources/CSV-BOM/toolbar.png)
 
-5. To add the CSV-BOM Add-In, click on the Add-Ins tab and then on the small plus icon.
+5. To add the BOM-Excel Add-In, click on the Add-Ins tab and then on the small plus icon.
 
 	![Add-Ins dialog](resources/CSV-BOM/addins_dialog.png)
 
-6. Locate the unzipped _CSV-BOM-master_ folder, open it and choose _CSV-BOM.py_ and click **OK**
+6. Locate the unzipped _BOM-Excel-master_ folder, open it and choose _BOM-Excel.py_ and click **OK**
 
 7. The Add-In is now listed but not running. Select the _CSV-BOM_ entry, activate _Run on Startup_ and click _Run_
 
-	![Add-In in the list](resources/CSV-BOM/addins-dialog-listed.png)
+	![Add-In in the list](resources/BOM-Excel/addins-dialog-listed.png)
 
 After _Run_ was clicked the Add-Ins dialog closes automatically.
-Check the _Create_ toolbar panel! CSV-BOM is ready to use ;-)
+Check the _Create_ toolbar panel! BOM-Excel is ready to use ;-)
 
-![](resources/CSV-BOM/create_panel.png)
+![](resources/BOM-Excel/create_panel.png)
 
 
 
