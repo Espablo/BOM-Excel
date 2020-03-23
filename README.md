@@ -57,10 +57,6 @@ The smallest value becomes the height (thickness), the next larger the width and
 * **Include description**
 > Includes the component description. To edit, right click on a component and select _Properties_ in the submenu.
 
-* **Use comma delimiter**
-> If checked BOM->Excel will replace the dot decimal delimiter with a comma. This is useful for all countries that uses a comma for float decimal delimiters.
-> As a benefit of that option, Applications like Apple Numbers, MS-Excel or OpenOffice can handle these CSV-entries as native numbers instead of simple text.
-
 * ...
 
 
