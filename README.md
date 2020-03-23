@@ -9,7 +9,7 @@ After [installation](#installation), go to the toolbar "Create" submenu and choo
 ![](resources/BOM-Excel/store_screen.png)
 
 * **Selected only**
-> Means that only selected components will be exported to CSV.
+> Means that only selected components will be exported to Excel.
 
 * **Include dimension**
 > Exports the accumulated bounding box dimension of all solid bodies on first level whithin a component.
@@ -83,7 +83,7 @@ The smallest value becomes the height (thickness), the next larger the width and
 
 6. Locate the unzipped _BOM-Excel-master_ folder, open it and choose _BOM-Excel.py_ and click **OK**
 
-7. The Add-In is now listed but not running. Select the _CSV-BOM_ entry, activate _Run on Startup_ and click _Run_
+7. The Add-In is now listed but not running. Select the _BOM-Excel_ entry, activate _Run on Startup_ and click _Run_
 
 	![Add-In in the list](resources/BOM-Excel/addins-dialog-listed.png)
 
