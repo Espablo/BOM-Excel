@@ -2,7 +2,7 @@
 Creates a bill of material and cut lists from the browser components tree in Autodesk Fusion360.
 
 ## General Usage Instructions
-After [installation](#installation), go to the toolbar "Create" submenu and choose "Create BOM". A dialog appears which shows provided options to control the Excel output. Click OK and a save file dialog comes up. Name your file and click OK. After creating the file a message box popups with the information that the file has successfully created. Open a suitable app which can handle CSV formatted files. Import the Excel file and voila the BOM of your design is showing.
+After [installation](#installation), go to the toolbar "Create" submenu and choose "Create BOM". A dialog appears which shows provided options to control the Excel output. Click OK and a save file dialog comes up. Name your file and click OK. After creating the file a message box popups with the information that the file has successfully created. Open a suitable app which can handle Excel formatted files. Import the Excel file and voila the BOM of your design is showing.
 
 ### Supportet options
 
@@ -58,7 +58,7 @@ The smallest value becomes the height (thickness), the next larger the width and
 > Includes the component description. To edit, right click on a component and select _Properties_ in the submenu.
 
 * **Use comma delimiter**
-> If checked CSV-BOM will replace the dot decimal delimiter with a comma. This is useful for all countries that uses a comma for float decimal delimiters.
+> If checked BOM->Excel will replace the dot decimal delimiter with a comma. This is useful for all countries that uses a comma for float decimal delimiters.
 > As a benefit of that option, Applications like Apple Numbers, MS-Excel or OpenOffice can handle these CSV-entries as native numbers instead of simple text.
 
 * ...
