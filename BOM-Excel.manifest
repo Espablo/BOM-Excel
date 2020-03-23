@@ -1,0 +1,13 @@
+{
+	"autodeskProduct":	"Fusion360",
+	"type":	"addin",
+	"id":	"bcd8c053-3eab-436b-87fa-31cafd9c2cad",
+	"author":	"Espablo",
+	"description":	{
+		"":	"Generates BOM output in Excel format. Several options are provided."
+	},
+	"version":	"rel-1-0-0",
+	"runOnStartup":	true,
+	"supportedOS":	"windows|mac",
+	"editEnabled":	true
+}
