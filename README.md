@@ -70,16 +70,16 @@ The smallest value becomes the height (thickness), the next larger the width and
 
 ## Installation
 
-1. Checkout the repository from Github or get the ZIP-package [here](http://www.github.de/macmanpb/CSV-BOM/archive/master.zip)
+1. Checkout the repository from Github or get the ZIP-package [here](http://www.github.de/macmanpb/BOM-Excel/archive/master.zip)
 2. If you have checked out the repo, you can skip point 3
 3. Extract the content of the downloaded ZIP to a preferred location
 4. Open Fusion360 and load the Add-Ins dialog
 
-	![Toolbar top right](resources/CSV-BOM/toolbar.png)
+	![Toolbar top right](resources/BOM-Excel/toolbar.png)
 
 5. To add the BOM-Excel Add-In, click on the Add-Ins tab and then on the small plus icon.
 
-	![Add-Ins dialog](resources/CSV-BOM/addins_dialog.png)
+	![Add-Ins dialog](resources/BOM-Excel/addins_dialog.png)
 
 6. Locate the unzipped _BOM-Excel-master_ folder, open it and choose _BOM-Excel.py_ and click **OK**
 
