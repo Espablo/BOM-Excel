@@ -1,5 +1,5 @@
 # BOM->Excel
-Creates a bill of material and cut lists from the browser components tree in Autodesk Fusion360.
+Creates a bill of material and cut lists from the browser components tree in Autodesk Fusion360. Created based on [CSV-BOM](https://github.com/macmanpb/CSV-BOM) 
 
 ## General Usage Instructions
 After [installation](#installation), go to the toolbar "Create" submenu and choose "Create BOM->Excel". A dialog appears which shows provided options to control the Excel output. Click OK and a save file dialog comes up. Name your file and click OK. After creating the file a message box popups with the information that the file has successfully created. Open a suitable app which can handle Excel formatted files. Import the Excel file and voila the BOM of your design is showing.
