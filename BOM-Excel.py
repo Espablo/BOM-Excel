@@ -48,9 +48,9 @@ class SampleCommandCreatedEventHandler(adsk.core.CommandCreatedEventHandler):
         design = adsk.fusion.Design.cast(product)
         lastPrefs = design.attributes.itemByName(cmdId, "lastUsedOptions")
         _onlySelectedComps = False
-        _ignoreCompsWithoutBodies = False
+        _ignoreCompsWithoutBodies = True
         _ignoreLinkedComps = False
-        _ignoreVisibleState = False
+        _ignoreVisibleState = True
         _ignoreUnderscorePrefixedComps = True
         _underscorePrefixStrip = False
         _fullList = True
@@ -103,7 +103,7 @@ class SampleCommandCreatedEventHandler(adsk.core.CommandCreatedEventHandler):
             ipLinkedComps = inputs.addBoolValueInput(cmdId + "_ignoreLinkedComps", "Wyklucz dołączone", True, "", _ignoreLinkedComps)
             ipLinkedComps.tooltip = "Wyklucz wszystkie komponenty, które są połączone z projektem"
 
-            ipVisibleState = inputs.addBoolValueInput(cmdId + "_ignoreVisibleState", "Ignoruje stan widocznośći", True, "", _ignoreVisibleState)
+            ipVisibleState = inputs.addBoolValueInput(cmdId + "_ignoreVisibleState", "Ignoruje stan widoczności", True, "", _ignoreVisibleState)
             ipVisibleState.tooltip = "Ignoruje widoczność elementu"
 
             ipUnderscorePrefix = inputs.addBoolValueInput(cmdId + "_ignoreUnderscorePrefixedComps", 'Wyklucz "_"', True, "", _ignoreUnderscorePrefixedComps)
@@ -353,7 +353,6 @@ class SampleCommandExecuteHandler(adsk.core.CommandEventHandler):
                     bbX = "{0:.0f}".format(dimX)
                     bbY = "{0:.0f}".format(dimY)
                     bbZ = "{0:.0f}".format(dimZ)
-
            
             name = self.filterFusionCompNameInserts(item["name"])
             append = True
