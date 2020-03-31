@@ -124,6 +124,7 @@ class SampleCommandCreatedEventHandler(adsk.core.CommandCreatedEventHandler):
             #ipsortDims.isVisible = True
 
             ipdecimalPlaces = inputs.addIntegerSpinnerCommandInput(cmdId + '_decimalPlaces', 'Miejsca po przecinku', 0, 5, 1, 0)
+            ipdecimalPlaces.tooltip = "Dane w BOM będą podawane z taką ilością miejsc po przecinku."
 
             grpFile = inputs.addGroupCommandInput(cmdId + '_grpFile', 'PLIK')
             grpFileChildren = grpFile.children
