@@ -63,8 +63,9 @@ class SampleCommandCreatedEventHandler(adsk.core.CommandCreatedEventHandler):
         _includeDensity = False
         _includeMaterial = False
         _includeDesc = True
-        _fileType = False
+        _fileType = True
         _stringlogo = self.openFileLogo(name_logo_file)
+        _decimalPlaces = True
 
         if lastPrefs:
             lastPrefs = json.loads(lastPrefs.value)
@@ -75,7 +76,7 @@ class SampleCommandCreatedEventHandler(adsk.core.CommandCreatedEventHandler):
             _ignoreUnderscorePrefixedComps = lastPrefs.get("ignoreUnderscorePrefComp", True)
             _underscorePrefixStrip = lastPrefs.get("underscorePrefixStrip", False)            
             _sortDims = lastPrefs.get("sortDims", False)
-            _openFile = lastPrefs.get("openFile", False)
+            _openFile = lastPrefs.get("openFile", True)
             _dataCSV = lastPrefs.get("dataCSV", False)
             _nameProj = lastPrefs.get("nameProj", False)
             _fullList = lastPrefs.get("fullList", False)
@@ -86,6 +87,7 @@ class SampleCommandCreatedEventHandler(adsk.core.CommandCreatedEventHandler):
             _includeMaterial = lastPrefs.get("includeMaterial", False)
             _fileType = lastPrefs.get("fileType", False)
             _stringlogo = lastPrefs.get("stringlogo", False)
+            _decimalPlaces = lastPrefs.get("decimalPlaces", True)
 
         try:    
             eventArgs = adsk.core.CommandCreatedEventArgs.cast(args)
@@ -120,6 +122,8 @@ class SampleCommandCreatedEventHandler(adsk.core.CommandCreatedEventHandler):
             ipsortDims = inputs.addBoolValueInput(cmdId + '_sortDims', 'Sortowanie wymiarów', True, '', _sortDims)
             ipsortDims.tooltip = "Sortuje wymiary tak aby najdłuższy wymiar był jako długość."
             #ipsortDims.isVisible = True
+
+            ipdecimalPlaces = inputs.addIntegerSpinnerCommandInput(cmdId + '_decimalPlaces', 'Miejsca po przecinku', 0, 5, 1, 0)
 
             grpFile = inputs.addGroupCommandInput(cmdId + '_grpFile', 'PLIK')
             grpFileChildren = grpFile.children
@@ -219,6 +223,18 @@ class SampleCommandExecuteHandler(adsk.core.CommandEventHandler):
             return  strlogo_name
         except OSError as e:  ## if failed, report it back to the user ##
             return (e.filename +'\n ' + e.strerror)
+
+    def formatDecimal(self, file, decimal):
+        if decimal == 0:
+            return "{0:.0f}".format(file)
+        elif decimal == 1:
+            return "{0:.1f}".format(file)
+        elif decimal == 2:
+            return "{0:.2f}".format(file)
+        elif decimal == 3:
+            return "{0:.3f}".format(file)
+        elif decimal >= 4:
+            return "{0:.4f}".format(file)
 
     def collectDataExcel(self, design, bom, prefs, filename):
         defaultUnit = design.fusionUnitsManager.defaultLengthUnits        
@@ -343,16 +359,17 @@ class SampleCommandExecuteHandler(adsk.core.CommandEventHandler):
             dim = 0
             for k in item["boundingBox"]:
                 dim += item["boundingBox"][k]
-            if dim > 0:
+            if dim > 0:                
+                dimSorted = sorted([dimX, dimY, dimZ])
                 if prefs["sortDims"]:
                     dimSorted = sorted([dimX, dimY, dimZ])
-                    bbZ = "{0:.0f}".format(dimSorted[2])
-                    bbX = "{0:.0f}".format(dimSorted[0])
-                    bbY = "{0:.0f}".format(dimSorted[1])
+                    bbZ = self.formatDecimal(dimSorted[2], prefs["decimalPlaces"])
+                    bbX = self.formatDecimal(dimSorted[0], prefs["decimalPlaces"])
+                    bbY = self.formatDecimal(dimSorted[1], prefs["decimalPlaces"])
                 else:
-                    bbX = "{0:.0f}".format(dimX)
-                    bbY = "{0:.0f}".format(dimY)
-                    bbZ = "{0:.0f}".format(dimZ)
+                    bbX = self.formatDecimal(dimX, prefs["decimalPlaces"])
+                    bbY = self.formatDecimal(dimY, prefs["decimalPlaces"])
+                    bbZ = self.formatDecimal(dimZ, prefs["decimalPlaces"])                    
            
             name = self.filterFusionCompNameInserts(item["name"])
             append = True
@@ -391,25 +408,21 @@ class SampleCommandExecuteHandler(adsk.core.CommandEventHandler):
             column += 1
             worksheet.write(row, column, double_item["double_dimZ"], align_center)            
             if prefs["includeArea"]:
-                column += 1
-                worksheet.write(row, column, double_item["double_area"], align_left)  
+                column += 1                
+                worksheet.write(row, column, self.formatDecimal(double_item["double_area"], prefs["decimalPlaces"]), align_left)  
             if prefs["includeMass"]:
                 column += 1
-                worksheet.write(row, column, double_item["double_mass"], align_left)  
+                worksheet.write(row, column, self.formatDecimal(double_item["double_mass"], prefs["decimalPlaces"]), align_left)  
             if prefs["includeDensity"]:
                 column += 1
-                worksheet.write(row, column, double_item["double_density"], align_left)  
+                worksheet.write(row, column, self.formatDecimal(double_item["double_density"], prefs["decimalPlaces"]), align_left)  
             if prefs["includeMaterial"]:
                 column += 1
                 worksheet.write(row, column, double_item["double_material"], align_left)  
             if prefs["includeDesc"]:
                 column += 1
-                worksheet.write(row, column, double_item["double_desc"], align_left)  
-            
-            
+                worksheet.write(row, column, double_item["double_desc"], align_left)            
             column = 0
-
-
         workbook.close() 
 
 
@@ -464,13 +477,13 @@ class SampleCommandExecuteHandler(adsk.core.CommandEventHandler):
             if dim > 0:
                 if prefs["sortDims"]:
                     dimSorted = sorted([dimX, dimY, dimZ])
-                    bbZ = "{0:.0f}".format(dimSorted[2])
-                    bbX = "{0:.0f}".format(dimSorted[0])
-                    bbY = "{0:.0f}".format(dimSorted[1])
+                    bbZ = self.formatDecimal(dimSorted[2], prefs["decimalPlaces"])
+                    bbX = self.formatDecimal(dimSorted[0], prefs["decimalPlaces"])
+                    bbY = self.formatDecimal(dimSorted[1], prefs["decimalPlaces"])
                 else:
-                    bbX = "{0:.0f}".format(dimX)
-                    bbY = "{0:.0f}".format(dimY)
-                    bbZ = "{0:.0f}".format(dimZ)
+                    bbX = self.formatDecimal(dimX, prefs["decimalPlaces"])
+                    bbY = self.formatDecimal(dimX, prefs["decimalPlaces"])
+                    bbZ = self.formatDecimal(dimX, prefs["decimalPlaces"])
             
             name = self.filterFusionCompNameInserts(item["name"])
             append = True
@@ -501,11 +514,11 @@ class SampleCommandExecuteHandler(adsk.core.CommandEventHandler):
             csvStr += interspace_start + double_item["double_name"] + interspace + self.replacePointDelimterOnPref(prefs["useComma"], double_item["double_instances"])
             csvStr += interspace + double_item["double_dimX"] + interspace + double_item["double_dimY"] + interspace + double_item["double_dimZ"]
             if prefs["includeArea"]:
-                csvStr += interspace + self.replacePointDelimterOnPref(prefs["useComma"], "{0:.2f}".format(double_item["double_area"]))
+                csvStr += interspace + self.replacePointDelimterOnPref(prefs["useComma"], self.formatDecimal(double_item["double_area"], prefs["decimalPlaces"]))
             if prefs["includeMass"]:
-                csvStr += interspace + self.replacePointDelimterOnPref(prefs["useComma"], "{0:.2f}".format(double_item["double_mass"]))
+                csvStr += interspace + self.replacePointDelimterOnPref(prefs["useComma"], self.formatDecimal(double_item["double_mass"], prefs["decimalPlaces"]))
             if prefs["includeDensity"]:
-                csvStr += interspace + self.replacePointDelimterOnPref(prefs["useComma"], "{0:.2f}".format(double_item["double_density"]))
+                csvStr += interspace + self.replacePointDelimterOnPref(prefs["useComma"], self.formatDecimal(double_item["double_density"], prefs["decimalPlaces"]))
             if prefs["includeMaterial"]:
                 csvStr += interspace + double_item["double_material"]
             if prefs["includeDesc"]:
@@ -536,6 +549,7 @@ class SampleCommandExecuteHandler(adsk.core.CommandEventHandler):
                 "includeMaterial" : inputs.itemById(cmdId + "_includeMaterial").value,
                 "fileType": inputs.itemById(cmdId + "_fileType").selectedItem.name,
                 "stringlogo": inputs.itemById(cmdId + "_stringlogo").value,
+                "decimalPlaces": inputs.itemById(cmdId + "_decimalPlaces").value,                
                 "generateCutlList": True,
                 "useComma": True
             }
